@@ -1,0 +1,89 @@
+services:
+  database:
+    image: mariadb:10-focal
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="$$(cat /run/secrets/db-password)" --silent']
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - dbnet
+    environment:
+      - MYSQL_DATABASE=example
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 3306
+      - 33060
+
+# BACKEND SERVICES
+  backend-app:
+    build:
+      context: backend/app
+      dockerfile: Containerfile
+    restart: always
+    environment:
+      - FLASK_DEBUG=1
+    secrets:
+      - db-password
+    networks:
+      - backnet
+      - dbnet
+    depends_on:
+      database:
+        condition: service_healthy
+
+  backend-proxy:
+    build: 
+      context: backend/proxy
+      dockerfile: Containerfile
+    restart: always
+    depends_on: 
+      - backend-app
+    networks:
+      - backnet
+
+# FRONTEND SERVICES
+  frontend-app:
+    build:
+      context: frontend/app
+      dockerfile: Containerfile
+    restart: always
+    environment:
+      - FLASK_DEBUG=1
+    networks:
+      - backnet
+      - frontnet
+    depends_on:
+      - backend-app
+
+  frontend-proxy:
+    build: 
+      context: frontend/proxy
+      dockerfile: Containerfile
+    restart: always
+    ports:
+      - 8080:80
+    depends_on: 
+      - frontend-app
+    networks:
+      - frontnet
+
+# END OF SERVICES
+
+volumes:
+  db-data:
+
+secrets:
+  db-password:
+    file: database/password.txt
+
+networks:
+  backnet:
+  frontnet:
+  dbnet:
