@@ -18,6 +18,6 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] grafana
     - [ ] fluentd
 - [ ] images mngt    
-    - create microservice app
-    - github action
-    - harbor
+    - [ ] create microservice app
+    - [ ] github action
+    - [ ] harbor
