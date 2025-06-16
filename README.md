@@ -20,6 +20,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
 - [ ] images mngt    
     - [x] create microservice app
     - [ ] github action (kaniko)
+    - [ ] argo-cd
     - [ ] harbor
 - [ ] best practices
     - [ ] HPA
