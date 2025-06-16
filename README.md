@@ -21,3 +21,8 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] create microservice app
     - [ ] github action (kaniko)
     - [ ] harbor
+- [ ] best practices
+    - [ ] HPA
+    - [ ] load test (locust)
+    - [ ] ressource management
+    
