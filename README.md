@@ -16,8 +16,8 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
 - [ ] monitoring
     - [x] prometheus
     - [x] grafana
-    - [ ] fluentd
+    - [ ] efk
 - [ ] images mngt    
-    - [ ] create microservice app
-    - [ ] github action
+    - [x] create microservice app
+    - [ ] github action (kaniko)
     - [ ] harbor
