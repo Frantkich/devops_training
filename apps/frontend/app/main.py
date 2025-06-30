@@ -4,10 +4,10 @@ import logging
 
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-server = Flask(__name__)
+app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
-@server.route('/')
+@app.route('/')
 def listBlog():
     logger.debug('Received request to list blog titles')
     try:
@@ -27,4 +27,4 @@ def listBlog():
 
 
 if __name__ == '__main__':
-    server.run()
+    app.run()
