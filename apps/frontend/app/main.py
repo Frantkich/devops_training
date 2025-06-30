@@ -10,7 +10,10 @@ logger = logging.getLogger(__name__)
 @server.route('/')
 def listBlog():
     logger.debug('Received request to list blog titles')
-    rec = requests.get('http://backend-proxy:8081/')
+    try:
+        rec = requests.get('http://backend-proxy:8081/')
+    except requests.exceptions.ConnectionError as e:
+        rec = None
     if not rec:
         logger.error('Failed to retrieve records from backend')
         return '<div> No records found </div>'

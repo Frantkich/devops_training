@@ -19,7 +19,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [ ] efk
 - [ ] images mngt    
     - [x] create microservice app
-    - [ ] github action (kaniko)
+    - [ ] github action
     - [ ] argo-cd
     - [ ] harbor
 - [ ] best practices

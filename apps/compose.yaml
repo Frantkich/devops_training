@@ -9,7 +9,7 @@ services:
       retries: 5
       start_period: 30s
     secrets:
-      - db-password
+      -  db-password
     volumes:
       - db-data:/var/lib/mysql
     networks:
@@ -23,6 +23,7 @@ services:
 
 # BACKEND SERVICES
   backend-app:
+    # image: frantkich/devops-training-backend-app:latest
     build:
       context: backend/app
       dockerfile: Containerfile
@@ -39,6 +40,7 @@ services:
         condition: service_healthy
 
   backend-proxy:
+    # image: frantkich/devops-training-backend-proxy:latest
     build: 
       context: backend/proxy
       dockerfile: Containerfile
@@ -50,6 +52,7 @@ services:
 
 # FRONTEND SERVICES
   frontend-app:
+    # image: frantkich/devops-training-frontend-app:latest
     build:
       context: frontend/app
       dockerfile: Containerfile
@@ -63,6 +66,7 @@ services:
       - backend-app
 
   frontend-proxy:
+    # image: frantkich/devops-training-frontend-proxy:latest
     build: 
       context: frontend/proxy
       dockerfile: Containerfile
