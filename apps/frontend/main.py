@@ -7,6 +7,12 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(leve
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
+@app.route('/health')
+def health():
+    logger.debug('Received health check request')
+    return 'OK', 200
+
+
 @app.route('/')
 def listBlog():
     logger.debug('Received request to list blog titles')
