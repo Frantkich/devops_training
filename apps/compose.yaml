@@ -29,6 +29,7 @@ services:
     environment:
       - FLASK_DEBUG=1
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_HOST=database
     networks:
       - backnet
       - dbnet
