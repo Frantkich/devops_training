@@ -1,0 +1,67 @@
+nameOverride: "" 
+fullnameOverride: ""
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+mariadb:
+  enabled: true
+  auth:
+    database: devops_training
+    rootPassword: mariadb-root-password
+  persistence:
+    size: 1Gi
+  volumePermissions:
+    enabled: true
+
+replicaCount: 1
+app:
+  image:
+    repository: frantkich/devops-training-backend-app
+    pullPolicy: Always
+    tag: latest
+proxy:
+  image:
+    repository: nginx
+    pullPolicy: Always
+    tag: 1.13-alpine
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http-python
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: http-python
+
+volumes: []
+volumeMounts: []

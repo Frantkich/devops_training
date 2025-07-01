@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "chart.fullname" . }}-nginx
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+data:
+  default.conf: |-
+    # Nginx configuration for backend proxy
+    # Think to edit dockercompose file too
+    server {
+      listen       80;
+      server_name  backend-proxy localhost;
+      location / {
+        proxy_pass   http://localhost:8000;
+      }
+    }

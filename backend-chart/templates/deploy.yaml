@@ -5,19 +5,19 @@ metadata:
   labels:
     {{- include "chart.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.frontend.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.frontend.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "chart.labels" . | nindent 8 }}
-        {{- with .Values.frontend.podLabels }}
+        {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -26,67 +26,66 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "chart.serviceAccountName" . }}
-      {{- with .Values.frontend.podSecurityContext }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: app
-          {{- with .Values.frontend.securityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.frontend.app.image.repository }}:{{ .Values.frontend.app.image.tag}}"
-          imagePullPolicy: {{ .Values.frontend.app.image.pullPolicy }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag}}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
-            - name: http
+            - name: http-python
               containerPort: 8000
               protocol: TCP
-          {{- with .Values.frontend.livenessProbe }}
+          env:
+            - name: FLASK_DEBUG
+              value: "1"
+            - name: MARIADB_ROOT_PASSWORD
+              value: {{ .Values.mariadb.auth.rootPassword | quote }}
+            - name: MARIADB_HOST
+              value:  {{ include "chart.fullname" . }}-mariadb
+          {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.frontend.readinessProbe }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.frontend.resources }}
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.frontend.volumeMounts }}
+          {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
         - name: proxy
-          {{- with .Values.frontend.securityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.frontend.proxy.image.repository }}:{{ .Values.frontend.proxy.image.tag }}"
-          imagePullPolicy: {{ .Values.frontend.proxy.image.pullPolicy }}
+          image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+          imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          {{- with .Values.frontend.livenessProbe }}
-          livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.frontend.readinessProbe }}
-          readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.frontend.resources }}
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-          - name: frontend-nginx
+          - name: backend-nginx
             mountPath: /etc/nginx/conf.d
             readOnly: true
       volumes:
-      - name: frontend-nginx
+      - name: backend-nginx
         configMap:
-          name: {{ include "chart.fullname" . }}-frontend-nginx
+          name: {{ include "chart.fullname" . }}-nginx
 
