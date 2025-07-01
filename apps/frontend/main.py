@@ -17,7 +17,7 @@ def health():
 def listBlog():
     logger.debug('Received request to list blog titles')
     try:
-        rec = requests.get('http://backend-proxy:8081/')
+        rec = requests.get('http://devops-training-backend:80/')
     except requests.exceptions.ConnectionError as e:
         rec = None
     if not rec:

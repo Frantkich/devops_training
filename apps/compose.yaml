@@ -40,6 +40,7 @@ services:
         condition: service_healthy
 
   backend-proxy:
+    hostname: devops-training-backend
     image: nginx:1.13-alpine
     restart: always
     depends_on: 
@@ -51,7 +52,7 @@ services:
         # Nginx configuration for frontend proxy
         # Think to edit helm chart too
         server {
-            listen       8081;
+            listen       80;
             server_name  backend-proxy localhost;
             location / {
                 proxy_pass   http://backend-app:8000;
