@@ -1,6 +1,7 @@
 from flask import Flask
 import json
 import logging
+import os
 
 from dbmanager import DBManager
 
@@ -22,7 +23,7 @@ def listBlog():
     logger.debug('Received request to list blog titles')
     global conn
     if not conn:
-        conn = DBManager(password_file='/run/secrets/db-password')
+        conn = DBManager(password=os.environ.get('MARIADB_ROOT_PASSWORD'))
         conn.populate_db()
     rec = conn.query_titles()
 

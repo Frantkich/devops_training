@@ -1,6 +1,8 @@
-DevOps Training
+# DevOps Training
 
 Objective is to deploy a full fledged infra on a single node raspberryPi
+
+## TODO
 
 - [x] prepare the node
     - [x] disable swap
@@ -26,4 +28,14 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [ ] HPA
     - [ ] load test (locust)
     - [ ] ressource management
-    
+
+
+## Start the app
+
+### Compose
+
+To launch the app via Compose first create a `.env` file in the `apps` folder with the value :
+
+```sh
+MARIADB_ROOT_PASSWORD=<YOUR_PASSWORD>
+```
