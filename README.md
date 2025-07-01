@@ -40,3 +40,12 @@ To launch the app via Compose first create a `.env` file in the `apps` folder wi
 ```sh
 MARIADB_ROOT_PASSWORD=<YOUR_PASSWORD>
 ```
+
+### K8s
+
+To push the app to k8s use the following helm charts :
+
+```sh
+helm upgrade --install devops-training-backend apps/backend/chart
+helm upgrade --install devops-training-frontend apps/frontend/chart
+```
