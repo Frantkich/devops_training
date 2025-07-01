@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(leve
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
-@app.route('/health')
+@app.route('/healthz')
 def health():
     logger.debug('Received health check request')
     return 'OK', 200

@@ -11,7 +11,7 @@ conn = None
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-@app.route('/health')
+@app.route('/healthz')
 def health():
     logger.debug('Received health check request')
     return 'OK', 200
