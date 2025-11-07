@@ -9,11 +9,11 @@ serviceAccount:
   name: ""
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: {}
   hosts:
-    - host: chart-example.local
+    - host: devops-training.frantkich.fr
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -22,7 +22,7 @@ ingress:
 replicaCount: 1
 app:
   image:
-    repository: frantkich/devops-training-frontend-app
+    repository: docker.io/frantkich/devops-training-frontend-app
     pullPolicy: Always
     tag: latest
 proxy:

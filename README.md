@@ -16,8 +16,8 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] ingressController (traefik)
     - [ ] cert-manager
 - [ ] monitoring
-    - [x] prometheus
-    - [x] grafana
+    - [ ] prometheus
+    - [ ] grafana
     - [ ] efk
 - [ ] images mngt
     - [x] create microservice app
@@ -30,6 +30,16 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [ ] load test (locust)
     - [ ] ressource management
 
+# Build the app
+
+```sh
+docker build -t devops-training-backend -f apps/backend/Containerfile apps/backend/
+docker tag devops-training-backend:latest docker.io/frantkich/devops-training-backend-app:latest
+docker push docker.io/frantkich/devops-training-backend-app:latest
+docker build -t devops-training-frontend -f apps/frontend/Containerfile apps/frontend/
+docker tag devops-training-frontend:latest docker.io/frantkich/devops-training-frontend-app:latest
+docker push docker.io/frantkich/devops-training-frontend-app:latest
+```
 
 ## Start the app
 
