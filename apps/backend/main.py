@@ -5,11 +5,15 @@ import os
 
 from dbmanager import DBManager
 
+if os.environ.get('FLASK_DEBUG') == '1':
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
 conn = None
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 @app.route('/healthz')

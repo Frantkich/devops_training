@@ -43,12 +43,13 @@ spec:
               containerPort: 8000
               protocol: TCP
           env:
-            - name: FLASK_DEBUG
-              value: "1"
             - name: MARIADB_ROOT_PASSWORD
               value: {{ .Values.mariadb.auth.rootPassword | quote }}
             - name: MARIADB_HOST
               value:  {{ include "chart.fullname" . }}-mariadb
+          {{- with .Values.app.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

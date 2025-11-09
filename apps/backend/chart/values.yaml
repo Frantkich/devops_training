@@ -35,6 +35,9 @@ app:
     repository: docker.io/frantkich/devops-training-backend-app
     pullPolicy: Always
     tag: latest
+  env:
+    - name: FLASK_DEBUG
+      value: "0"
 proxy:
   image:
     repository: nginx

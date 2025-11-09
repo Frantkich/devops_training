@@ -3,7 +3,12 @@ import requests
 import logging
 import os
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+if os.environ.get('FLASK_DEBUG') == '1':
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 

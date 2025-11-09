@@ -8,6 +8,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] disable swap
     - [x] enable cgroup
     - [x] check networking rules
+    - [x] create FQDN
 - [x] k8s installation
     - [x] install k3s
 - [ ] k8s components
