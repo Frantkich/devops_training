@@ -30,7 +30,7 @@ jobs:
           context: apps/frontend
           file: apps/frontend/Containerfile
           push: true
-          tags: "frontend:latest"
+          tags: "devops-trainingfrontend-app:latest"
 
       - name: Build and push Docker image - backend
         id: push_backend
@@ -39,4 +39,4 @@ jobs:
           context: apps/backend
           file: apps/backend/Containerfile
           push: true
-          tags: "backend:latest"
+          tags: "devops-training-backend-app:latest"
