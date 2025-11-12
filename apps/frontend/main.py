@@ -29,7 +29,7 @@ def listBlog():
         rec = None
     if not rec:
         logger.error('Failed to retrieve records from backend')
-        return '<div> No records found </div>'
+        return '<div>Failed to retrieve records from backend</div>'
     else:
         logger.debug('Successfully retrieved records from backend')
         rec = rec.json().get('titles', [])

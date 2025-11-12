@@ -29,7 +29,7 @@ app:
     - name: FLASK_DEBUG
       value: "0"
     - name: BACKEND_URL
-      value: "http://devops-training.api.frantkich.fr:31707/"
+      value: "http://devops-training.api.frantkich.fr:30080/"
 proxy:
   image:
     repository: nginx

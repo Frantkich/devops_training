@@ -28,7 +28,7 @@ def listBlog():
     global conn
     if not conn:
         conn = DBManager(password=os.environ.get('MARIADB_ROOT_PASSWORD'), host=os.environ.get('MARIADB_HOST'))
-        conn.populate_db()
+        # conn.populate_db()
     rec = conn.query_titles()
 
     titles = []
