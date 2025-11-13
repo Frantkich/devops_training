@@ -30,7 +30,7 @@ jobs:
           context: apps/frontend
           file: apps/frontend/Containerfile
           push: true
-          tags: "frantkich/devops-trainingfrontend-app:latest"
+          tags: "frantkich/devops-training-frontend-app:latest"
 
       - name: Build and push Docker image - backend
         id: push_backend
