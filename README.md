@@ -15,7 +15,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] cni (flannel)
     - [x] csi (local-path)
     - [x] ingressController (traefik)
-    - [ ] cert-manager
+    - [x] cert-manager
 - [ ] monitoring
     - [ ] prometheus
     - [ ] grafana
@@ -23,7 +23,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
 - [ ] images mngt
     - [x] create microservice app
     - [x] helm charts
-    - [ ] github action
+    - [x] github action
     - [ ] argo-cd
     - [ ] harbor
 - [ ] best practices

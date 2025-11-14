@@ -11,13 +11,17 @@ serviceAccount:
 ingress:
   enabled: true
   className: ""
-  annotations: {}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
   hosts:
     - host: devops-training.frantkich.fr
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: []
+  tls:
+    - hosts:
+      - devops-training.frantkich.fr
+      secretName: devops-training-frontend-tls
 
 replicaCount: 1
 app:

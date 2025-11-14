@@ -25,8 +25,12 @@ MARIADB_ROOT_PASSWORD=<YOUR_PASSWORD>
 
 ```sh
 # Do the prerequities
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san k3s.frantkich.fr  --disable traefik" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san k3s.frantkich.fr --disable traefik" sh -
+k apply -f setup/cluster-issuer.yaml
+kubectl create secret generic cloudflare-api-token-secret -n cert-manager --from-literal=api-token=<YOUR_CLOUDFLARE_API_TOKEN>
 helm upgrade traefik traefik/traefik --namespace kube-system --values traefik-values.yaml
+helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --version v1.19.1 --namespace cert-manager --create-namespace --set crds.enabled=true
+  
 ```
 
 To push the app to k8s use the following helm charts :
