@@ -17,9 +17,10 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] ingressController (traefik)
     - [x] cert-manager
 - [ ] monitoring
-    - [ ] prometheus
-    - [ ] grafana
-    - [ ] efk
+    - [x] prometheus
+    - [x] grafana
+    - [x] alertmanager
+    - [x] efk stack
 - [ ] images mngt
     - [x] create microservice app
     - [x] helm charts

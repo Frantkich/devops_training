@@ -41,7 +41,7 @@ app:
     tag: latest
   env:
     - name: FLASK_DEBUG
-      value: "0"
+      value: "1"
 proxy:
   image:
     repository: nginx

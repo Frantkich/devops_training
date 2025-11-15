@@ -1,0 +1,19 @@
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - alertmanager.frantkich.fr
+
+grafana:
+  enabled: true
+  persistence:
+    enabled: true
+  init-chown-data: 
+    enabled: false
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - grafana.frantkich.fr

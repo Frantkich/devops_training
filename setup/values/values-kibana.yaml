@@ -1,0 +1,7 @@
+ingress:
+  enabled: true
+  className: "traefik"
+  hosts:
+    - host: kibana.frantkich.fr
+      paths:
+        - path: /

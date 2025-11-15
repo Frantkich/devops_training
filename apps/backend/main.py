@@ -21,9 +21,12 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 @app.route("/healthz")
 def health():
-    logger.debug("Received health check request")
     return "OK", 200
 
+@app.route("/")
+def index():
+    logger.debug("Received request to root endpoint")
+    return "Welcome to the Blog API", 200
 
 @app.route("/api/blogs", methods=["GET", "POST"])
 def listBlog():
