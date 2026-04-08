@@ -37,17 +37,22 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag}}"
-          args: {{- toYaml .Values.app.args | nindent 12 }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: {{- toYaml .Values.app.args | nindent 12 }}
           ports:
             - name: http-python
               containerPort: 8000
               protocol: TCP
           env:
-            - name: MARIADB_ROOT_PASSWORD
-              value: {{ .Values.mariadb.auth.rootPassword | quote }}
+            - name: MARIADB_USER
+              value: {{ .Values.mariadb.auth.username | quote }}
             - name: MARIADB_HOST
               value:  {{ include "chart.fullname" . }}-mariadb
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mariadb.auth.existingSecret }}
+                  key: mariadb-password
           {{- with .Values.app.env }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -67,3 +72,7 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

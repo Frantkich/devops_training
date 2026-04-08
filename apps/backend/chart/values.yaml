@@ -43,6 +43,7 @@ podLabels: {}
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 1000
+  runAsGroup: 1000
   fsGroup: 1000
 
 serviceAccount:
@@ -53,11 +54,11 @@ serviceAccount:
 
 securityContext:
   allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
   capabilities:
     drop: ["ALL"]
   seccompProfile:
     type: "RuntimeDefault"
-  # readOnlyRootFilesystem: true
 
 resources:
   requests:
@@ -76,8 +77,12 @@ readinessProbe:
     path: /healthz
     port: http-python
 
-volumes: []
-volumeMounts: []
+volumes:
+  - name: tmp
+    emptyDir: {}
+volumeMounts:
+  - name: tmp
+    mountPath: /tmp
 
 # ───────────────────────────────
 # Networking
@@ -108,8 +113,37 @@ mariadb:
   enabled: true
   auth:
     database: devops_training
-    rootPassword: mariadb-root-password
-  persistence:
-    size: 1Gi
+    username: appuser
+    existingSecret: mariadb-secret
+    
+  primary:
+    podSecurityContext:
+      fsGroup: 1001
+      fsGroupChangePolicy: Always
+
+    containerSecurityContext:
+      runAsUser: 1001
+      runAsGroup: 1001
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: RuntimeDefault
+
+    persistence:
+      enabled: true
+      size: 1Gi
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1Gi
+
   volumePermissions:
-    enabled: true
+    enabled: false

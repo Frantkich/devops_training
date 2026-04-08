@@ -3,11 +3,11 @@
 This app have CI/CD, every push to git, build and push images to DockerHub.
 
 ```sh
-# Frontend
+# Backend
 docker build -t devops-training-backend -f apps/backend/Containerfile apps/backend/
 docker tag devops-training-backend:latest docker.io/frantkich/devops-training-backend-app:latest
 docker push docker.io/frantkich/devops-training-backend-app:latest
-# Backend
+# Frontend
 docker build -t devops-training-frontend -f apps/frontend/Containerfile apps/frontend/
 docker tag devops-training-frontend:latest docker.io/frantkich/devops-training-frontend-app:latest
 docker push docker.io/frantkich/devops-training-frontend-app:latest
@@ -70,11 +70,17 @@ helm install fluent-bit fluent/fluent-bit --namespace monitoring --values setup/
 
 ### Deploy app
 
-To push the app to k8s use the following helm charts :
+To prepare the app :
 
 ```sh
 kubectl create ns devops-training
 k label ns devops-training pod-security.kubernetes.io/enforce=restricted
+
+kubectl -n devops-training create secret generic mariadb-secret --from-literal mariadb-root-password=mariadb-root-password --from-literal mariadb-replication-password=mariadb-replication-password --from-literal mariadb-password=appuser-password 
+```
+To push the app to k8s use the following helm charts :
+
+```sh
 helm upgrade --install devops-training-backend apps/backend/chart -n devops-training
 helm upgrade --install devops-training-frontend apps/frontend/chart -n  devops-training
 ```

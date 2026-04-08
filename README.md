@@ -31,6 +31,7 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] security Context
     - [x] network policies
     - [x] tls
+    - [x] PSS restricted
 - [ ] best practices
     - [ ] HPA
     - [ ] load test (locust)

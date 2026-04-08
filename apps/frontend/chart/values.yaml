@@ -31,7 +31,10 @@ app:
       value: "1"
     - name: BACKEND_URL
       value: https://devops-training.api.frantkich.fr:30443
-
+  args:
+    - "--workers=2"
+    - "--bind=0.0.0.0:8000"
+    - "main:app"
 # ───────────────────────────────
 # Pod Configuration
 # ───────────────────────────────
@@ -40,6 +43,9 @@ podLabels: {}
 
 podSecurityContext:
   runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -72,8 +78,12 @@ readinessProbe:
     path: /healthz
     port: http-python
 
-volumes: []
-volumeMounts: []
+volumes:
+  - name: tmp
+    emptyDir: {}
+volumeMounts:
+  - name: tmp
+    mountPath: /tmp
 
 # ───────────────────────────────
 # Networking
