@@ -1,14 +1,6 @@
-entryPoints:
-  web:
-    address: ":80"
-  websecure:
-    address: ":443"
-
 ingressRoute:
   dashboard:
     enabled: true
-    entryPoints: ["web", "websecure"]
-    matchRule: Host(`traefik.frantkich.fr`)
 
 ports:
   web:

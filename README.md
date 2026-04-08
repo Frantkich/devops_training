@@ -11,12 +11,12 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] create FQDN
 - [x] k8s installation
     - [x] install k3s
-- [ ] k8s components
+- [x] k8s components
     - [x] cni (flannel)
     - [x] csi (local-path)
     - [x] ingressController (traefik)
     - [x] cert-manager
-- [ ] monitoring
+- [x] monitoring
     - [x] prometheus
     - [x] grafana
     - [x] alertmanager
@@ -27,8 +27,11 @@ Objective is to deploy a full fledged infra on a single node raspberryPi
     - [x] github action
     - [ ] argo-cd
     - [ ] harbor
+- [x] security
+    - [x] security Context
+    - [x] network policies
+    - [x] tls
 - [ ] best practices
     - [ ] HPA
     - [ ] load test (locust)
     - [ ] ressource management
-

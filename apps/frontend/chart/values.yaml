@@ -1,57 +1,67 @@
+# ───────────────────────────────
+# Chart / Naming
+# ───────────────────────────────
 nameOverride: "" 
 fullnameOverride: ""
+
+# ───────────────────────────────
+# Deployment / Scaling
+# ───────────────────────────────
+# TODO: Change this to HPA
+replicaCount: 1
+
+# ───────────────────────────────
+# Image & Registry
+# ───────────────────────────────
+image:
+  repository: docker.io/frantkich/devops-training-frontend-app
+  pullPolicy: Always
+  # TODO: Change this to fix version
+  tag: latest
+
 imagePullSecrets: []
 
-serviceAccount:
-  create: true
-  automount: true
-  annotations: {}
-  name: ""
-
-ingress:
-  enabled: true
-  className: ""
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-  hosts:
-    - host: devops-training.frantkich.fr
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls:
-    - hosts:
-      - devops-training.frantkich.fr
-      secretName: devops-training-frontend-tls
-
-replicaCount: 1
+# ───────────────────────────────
+# Application Configuration
+# ───────────────────────────────
 app:
-  image:
-    repository: docker.io/frantkich/devops-training-frontend-app
-    pullPolicy: Always
-    tag: latest
   env:
+    # TODO: Change this to prod
     - name: FLASK_DEBUG
       value: "1"
     - name: BACKEND_URL
       value: https://devops-training.api.frantkich.fr:30443
-proxy:
-  image:
-    repository: nginx
-    pullPolicy: Always
-    tag: 1.13-alpine
 
+# ───────────────────────────────
+# Pod Configuration
+# ───────────────────────────────
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  runAsNonRoot: true
 
-securityContext: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  seccompProfile:
+    type: "RuntimeDefault"
+  capabilities:
+    drop: ["ALL"]
 
-service:
-  type: ClusterIP
-  port: 80
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
 
-resources: {}
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
 
 livenessProbe:
   httpGet:
@@ -64,3 +74,25 @@ readinessProbe:
 
 volumes: []
 volumeMounts: []
+
+# ───────────────────────────────
+# Networking
+# ───────────────────────────────
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+  hosts:
+    - host: devops-training.frantkich.fr
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+      - devops-training.frantkich.fr
+      secretName: devops-training-frontend-tls

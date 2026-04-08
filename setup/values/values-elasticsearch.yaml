@@ -4,3 +4,5 @@ volumeClaimTemplate:
   resources:
     requests:
       storage: 10Gi
+secret:
+  password: "CHANGE_ME_TO_A_STRONG_PASSWORD"

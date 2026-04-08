@@ -1,5 +1,7 @@
 # Build the app
 
+This app have CI/CD, every push to git, build and push images to DockerHub.
+
 ```sh
 # Frontend
 docker build -t devops-training-backend -f apps/backend/Containerfile apps/backend/
@@ -25,11 +27,11 @@ docker-compose up -d
 
 values-kibana.yaml## K8s
 
-### Create k8s cluster
+## Create k8s cluster
 
 ```sh
 # Do the prerequities
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san k3s.frantkich.fr --disable traefik" sh - 
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san k3s.frantkich.fr --disable traefik --write-kubeconfig-mode=644" sh -
 ```
 
 ### Install helm charts
@@ -42,7 +44,7 @@ helm repo update
 
 helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --version v1.19.1 --namespace cert-manager --create-namespace --set crds.enabled=true
 kubectl create secret generic cloudflare-api-token-secret -n cert-manager --from-literal=api-token=<YOUR_CLOUDFLARE_API_TOKEN>
-kubetl apply -f setup/cluster-issuer.yaml
+kubectl apply -f setup/ressources/cluster-issuer.yaml
 helm install traefik traefik/traefik --namespace kube-system --values setup/values/traefik-values.yaml
 ```
 
@@ -71,6 +73,8 @@ helm install fluent-bit fluent/fluent-bit --namespace monitoring --values setup/
 To push the app to k8s use the following helm charts :
 
 ```sh
-helm upgrade --install devops-training-backend apps/backend/chart
-helm upgrade --install devops-training-frontend apps/frontend/chart
+kubectl create ns devops-training
+k label ns devops-training pod-security.kubernetes.io/enforce=restricted
+helm upgrade --install devops-training-backend apps/backend/chart -n devops-training
+helm upgrade --install devops-training-frontend apps/frontend/chart -n  devops-training
 ```
