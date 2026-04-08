@@ -16,4 +16,4 @@ COPY . .
 
 USER app
 
-CMD ["gunicorn"]
+ENTRYPOINT ["gunicorn"]
