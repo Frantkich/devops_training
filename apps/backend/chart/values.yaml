@@ -28,6 +28,10 @@ app:
     # TODO: Change this to prod
     - name: FLASK_DEBUG
       value: "1"
+  args:
+    - "--workers=2"
+    - "--bind=0.0.0.0:8000"
+    - "main:app"
 
 # ───────────────────────────────
 # Pod Configuration
