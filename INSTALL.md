@@ -45,7 +45,8 @@ helm repo update
 helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --version v1.19.1 --namespace cert-manager --create-namespace --set crds.enabled=true
 kubectl create secret generic cloudflare-api-token-secret -n cert-manager --from-literal=api-token=<YOUR_CLOUDFLARE_API_TOKEN>
 kubectl apply -f setup/ressources/cluster-issuer.yaml
-helm install traefik traefik/traefik --namespace kube-system --values setup/values/traefik-values.yaml
+
+helm install traefik traefik/traefik --namespace traefik --values setup/values/traefik-values.yaml --create-namespace
 ```
 
 #### Monitoring

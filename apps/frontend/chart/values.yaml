@@ -39,7 +39,8 @@ app:
 # Pod Configuration
 # ───────────────────────────────
 podAnnotations: {}
-podLabels: {}
+podLabels: 
+  app: frontend
 
 podSecurityContext:
   runAsNonRoot: true

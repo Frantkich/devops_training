@@ -38,7 +38,8 @@ app:
 # ───────────────────────────────
 
 podAnnotations: {}
-podLabels: {}
+podLabels:
+  app: backend
 
 podSecurityContext:
   runAsNonRoot: true
@@ -111,6 +112,9 @@ ingress:
 # ───────────────────────────────
 mariadb:
   enabled: true
+  commonLabels:
+    app: db
+
   auth:
     database: devops_training
     username: appuser
