@@ -33,8 +33,6 @@ def listBlog():
     global conn
     if not conn:
         conn = DBManager(password=os.environ.get('MARIADB_PASSWORD'), user=os.environ.get('MARIADB_USER'), host=os.environ.get('MARIADB_HOST'))
-        # conn = DBManager()
-        conn.populate_db()
     if request.method == "POST":
         logger.debug("Received request to add blog title")
         conn.append_title(request.json.get("title"))
