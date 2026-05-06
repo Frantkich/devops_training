@@ -18,9 +18,7 @@ class DBManager:
     def query_titles(self):
         logger.debug('Querying blog titles')
         self.cursor.execute('SELECT title FROM blog')
-        rec = []
-        for c in self.cursor:
-            rec.append(c[0])
+        rec = [c[0] for c in self.cursor.fetchall()]
         return rec
 
     def append_title(self, title):

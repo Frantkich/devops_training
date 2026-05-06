@@ -15,7 +15,6 @@ else:
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
-conn = None
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 
@@ -30,9 +29,7 @@ def index():
 
 @app.route("/api/blogs", methods=["GET", "POST"])
 def listBlog():
-    global conn
-    if not conn:
-        conn = DBManager(password=os.environ.get('MARIADB_PASSWORD'), user=os.environ.get('MARIADB_USER'), host=os.environ.get('MARIADB_HOST'))
+    conn = DBManager(password=os.environ.get('MARIADB_PASSWORD'), user=os.environ.get('MARIADB_USER'), host=os.environ.get('MARIADB_HOST'))
     if request.method == "POST":
         logger.debug("Received request to add blog title")
         conn.append_title(request.json.get("title"))
